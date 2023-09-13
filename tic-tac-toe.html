@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: gray;
+    }
+   table,#line{
+        position: absolute;
+        top:250px;
+        left: 600px;
+    }
+    th{
+        height: 100px;
+        width: 100px;
+        background-color: white;
+        font-size: 80px;
+        /* color: red; */
+    }
+    th:hover{
+        background-color: rgb(221, 203, 237);
+    }
+    #main{
+        text-align: center;
+        font-size: 90px;
+        margin-top: 60px;
+    }
+    .popup{
+            height: 200px;
+            width: 400px;
+            background-color: black;
+            background-size: cover;
+            margin:auto;
+            margin-top: -150px;
+            position: relative;
+            border-radius: 30px;
+            display: none;
+        }
+        p{
+            font-size: 50px;
+            position: absolute;
+            top:-30px;
+            left: 80px;
+            color: white;
+        }
+        .action{
+            position: absolute;
+            top: 120px;
+            left: 80px;
+        }
+        .restart,.exit{
+            padding: 10px;
+            font-size: 30px;
+            font-weight: bolder;
+            border-radius: 20px;
+            border: none;
+            margin: 10px;
+            /* position: fixed; */
+        }
+        .restart{
+            background-color: #1B9C85;
+            color: white;
+        }
+        .restart:hover{
+            background-color: white;
+            color: #1B9C85;
+            border: 2px solid #1B9C85;
+        }
+        .exit{
+            background-color: #FF6969;
+            color: white;
+        }
+        .exit:hover{
+            background-color: white;
+            color: #FF6969;
+            border: 2px solid #FF6969;
+        }
+</style>
+<body>
+    <div id="main">Tic Tac Game</div>
+        <canvas id="line" width="300" height="300"></canvas>
+    <table border="1" bgcolor="black" id="table">
+        <tr>
+            <th onclick="tiktak(this)" class="t1"></th>
+            <th onclick="tiktak(this)" class="t1"></th>
+            <th onclick="tiktak(this)" class="t1"></th>
+        </tr>
+        <tr>
+            <th onclick="tiktak(this)" class="t1"></th>
+            <th onclick="tiktak(this)" class="t1"></th>
+            <th onclick="tiktak(this)" class="t1"></th>
+        </tr>
+        <tr>
+            <th onclick="tiktak(this)" class="t1"></th>
+            <th onclick="tiktak(this)" class="t1"></th>
+            <th onclick="tiktak(this)" class="t1"></th>
+        </tr>
+    </table>
+        <div class="popup">
+            <p>Game Over</p>
+            <div class="action">
+                <input type="button" class="restart" value="Restart" id="restart"/>
+                <input type="button" class="exit" value="Exit" id="exit"/>
+            </div>
+        </div>
+</body>
+    <script>
+        let i=0;
+        let len=-1;
+        let stop;
+        function tiktak(action){
+            if(action.innerText=="" && i==0){
+                action.innerText='\u00D7';
+                action.style.color="green"
+                len++;
+                if(len==8){
+                    gameoverover();
+                }
+                win_check();
+                auto();
+            }
+                function auto(){
+                     stop= setInterval(zero,500);
+                }
+                function zero(){
+                    i=1;
+                    let rand=Math.round(Math.random()*8);
+                    let ele=document.querySelectorAll('.t1');
+                    if(ele[rand].innerText=="" && i==1){
+                        console.log('hlo');
+                        ele[rand].innerText='o';
+                        ele[rand].style.color="red";
+                        i=0;
+                        len++;
+                        clearInterval(stop);
+                        win_check();
+                    }
+                }
+
+            function win_check(){ 
+                let c = document.getElementById("line");
+                let ctx = c.getContext("2d");
+                let table=document.getElementById('table')
+                let index=document.querySelectorAll('.t1');
+            if(index[0].innerText===index[4].innerText&&index[8].innerText===index[0].innerText && index[0].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.strokeStyle="blue";
+                ctx.moveTo(50,50);
+                ctx.lineTo(250,250)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[0].innerText===index[1].innerText&&index[2].innerText===index[0].innerText && index[0].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(50,50);
+                ctx.lineTo(270,50)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[3].innerText===index[4].innerText&&index[5].innerText===index[3].innerText && index[3].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(50,150);
+                ctx.lineTo(270,150)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[6].innerText===index[7].innerText&&index[8].innerText===index[6].innerText && index[6].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(70,270);
+                ctx.lineTo(270,270)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[0].innerText===index[3].innerText&&index[6].innerText===index[0].innerText && index[0].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(50,50);
+                ctx.lineTo(50,270)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[1].innerText===index[4].innerText&&index[7].innerText===index[1].innerText && index[1].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(160,50);
+                ctx.lineTo(160,270)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[2].innerText===index[5].innerText&&index[8].innerText===index[2].innerText && index[2].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(265,50);
+                ctx.lineTo(265,270)
+                ctx.stroke();
+                gameoverover()
+            }
+            else if(index[2].innerText===index[4].innerText&&index[6].innerText===index[2].innerText && index[2].innerText!=""){
+                table.style.zIndex=-1;
+                ctx.lineWidth=3;
+                ctx.moveTo(265,50);
+                ctx.lineTo(60,260)
+                ctx.stroke();
+                gameoverover()
+            }
+            
+        }}
+        function gameoverover(){
+            document.querySelector('.popup').style.display='block';
+            let exit=document.getElementById('exit');
+            let restart=document.getElementById('restart');
+        exit.addEventListener('click',()=>{
+            window.close();
+        })
+        restart.addEventListener('click',()=>{
+            location.reload();
+        })
+    }
+    </script>
+</html>
